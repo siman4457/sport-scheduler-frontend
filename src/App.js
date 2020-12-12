@@ -7,13 +7,16 @@ import {
 
 import './App.css';
 import './App.sass';
-import Dashboard from "./client/components/dashboard/Dashboard";
-import SignedInNav from "./client/components/signedInNav/SignedInNav"
-import SignedOutNav from "./client/components/signedOutNav/SignedOutNav"
-import Schedule from "./client/components/schedule/Schedule"
-import Employees from "./client/components/employees/Employees"
-import Loading from "./client/components/loading/Loading"
-import Login from "./client/components/login/Login"
+import Dashboard from "./components/dashboard/Dashboard";
+import SignedInNav from "./components/signedInNav/SignedInNav"
+import SignedOutNav from "./components/signedOutNav/SignedOutNav"
+import Schedule from "./components/schedule/Schedule"
+import Employees from "./components/employees/Employees"
+import Loading from "./components/loading/Loading"
+import Login from "./components/login/Login"
+import CreateGame from "./components/schedule/CreateGame"
+import AssignGames from "./components/schedule/AssignGames"
+import Availability from "./components/employees/Availability"
 
 function App() {
   //https://stackoverflow.com/questions/31084779/how-to-restrict-access-to-routes-in-react-router
@@ -53,9 +56,12 @@ function App() {
           <Switch>
             <Route path="/login" exact component={Login} appProps={{isAuthenticated}}/>
             <Route path="/" exact component={Dashboard} appProps={{isAuthenticated}}/>
-            <Route path="/schedule" exact component={Schedule} appProps={{isAuthenticated}}/>
+            <Route path="/schedule" exact component={Schedule}/>
             <Route path="/employees" exact component={Employees} appProps={{isAuthenticated}}/>
-              <Route path="/loading" exact component={Loading} />
+            <Route path="/loading" exact component={Loading} />
+            <Route path="/createGame" component={CreateGame} />
+            <Route path="/assignGames" component={AssignGames} />
+            <Route path="/availability" component={Availability}/>
           </Switch>
 
         </div>
