@@ -12,7 +12,7 @@ export default function CreateGame() {
 
     const onSubmit = async data => {
         data["datetime"] = new Date(startDate.toISOString())
-        console.log(data)
+        // console.log(data)
         axios.post("http://localhost:5000/games/createGame", data)
         .then(res => {
             console.log(res.data.message)
@@ -54,7 +54,7 @@ export default function CreateGame() {
                     <div className="field">
                         <label className="label">Age Group</label>
                         <div className="control">
-                            <div class="select">
+                            <div className="select">
                                 <select name="ageGroup" ref={register}>
                                     {ageGroups.map(ageGroup => (
                                         <option>{ageGroup}</option>
@@ -67,7 +67,7 @@ export default function CreateGame() {
                     <div className="field">
                         <label className="label">Film Type</label>
                         <div className="control">
-                            <div class="select">
+                            <div className="select">
                                 <select name="filmType" ref={register}>
                                     <option>Manual Film</option>
                                     <option>Veo</option>
@@ -95,12 +95,12 @@ export default function CreateGame() {
                         </div>
                     </div>
 
-                    <div class="field is-grouped">
-                        <div class="control">
-                            <button class="button is-link" type="submit">Submit</button>
+                    <div className="field is-grouped">
+                        <div className="control">
+                            <button className="button is-link" type="submit">Submit</button>
                         </div>
-                        <div class="control">
-                            <button class="button is-link is-light">Cancel</button>
+                        <div className="control">
+                            <button className="button is-link is-light">Cancel</button>
                         </div>
                     </div>
                 </form>

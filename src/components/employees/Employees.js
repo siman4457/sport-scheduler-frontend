@@ -16,6 +16,7 @@ function Employees(props) {
             </div>
         </section>
         <Link className="button" to={"/availability"}>Availability</Link>
+        <Link className="button" to={"/createEmployee"}>Add Employee</Link>
         <table className="table is-responsive container">
         <thead>
             <tr>
@@ -31,9 +32,7 @@ function Employees(props) {
             <th>Address</th>
             </tr>
         </thead>
-       
-                    
-                
+
         <tbody>
         {loading ? ("Loading...") 
         : (data.employees.map(employee => (
@@ -51,9 +50,7 @@ function Employees(props) {
             </tr>
             )))}
         </tbody>
-        
         </table>
-
         </div>
     );
 }
