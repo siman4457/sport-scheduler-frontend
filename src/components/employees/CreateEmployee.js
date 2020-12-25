@@ -1,20 +1,37 @@
 import React from 'react'
-import {useForm} from "react-hook-form"
+import {useForm, Controller} from "react-hook-form"
+import Checkbox from "./Checkbox"
 
-// type FormValues = {
-//     canSetUp: Boolean,
-//     needsTraining: Boolean,
-//     canFilmSoccer: Boolean,
-//     canFilmFootball: Boolean,
-//     camLiveStream: Boolean,
-//     canVeo: Boolean,
-//     canManualRecord: Boolean
-// }
+// ************ NOT COMPLETE **************
+
+const defaultValues = {
+    first_name: "",
+    last_name: "",
+    age: 0,
+    address: "",
+    canSetUp: false,
+    needsTraining: true,
+    canFilmSoccer: false,
+    canFilmFootball: false,
+    canLiveStream: false,
+    canVeo: false,
+    canManualRecord: false
+  };
 
 export default function CreateEmployee() {
-    const {register, handleSubmit, errors} = useForm();
+    const {register, handleSubmit, control, errors} = useForm({defaultValues});
 
     const onSubmit = async data => {
+        //TODO: Think of a cleaner way of checking if the value is true or false. 
+        //      useForm passes the string "True" instead of a boolean true...
+        // for(e in data){
+        //     if(e.value === "True"){
+        //         e.value = true
+        //     }
+        //     else{
+        //         e.value = false
+        //     }
+        // }
         console.log(data)
         
         // axios.post("http://localhost:5000/games/createEmployee", data)
@@ -64,6 +81,15 @@ export default function CreateEmployee() {
                     </div>
 
                     <div className="field">
+                        <div className="control">
+                            <label className="checkbox">
+                                <Controller as={Checkbox} name="canSetUp" type="checkbox" control={control}/>
+                                Can they set up a rig on their own?
+                            </label>
+                        </div>
+                    </div>
+
+                    {/* <div className="field">
                         <label className="label">Can they set up a rig on their own?</label>
                         <div className="control">
                             <div className="select">
@@ -73,8 +99,8 @@ export default function CreateEmployee() {
                                 </select>
                             </div>
                         </div>
-                    </div>
-
+                    </div> */}
+                    
                     <div className="field">
                         <label className="label">Do they need training?</label>
                         <div className="control">
