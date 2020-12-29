@@ -16,7 +16,8 @@ class BigCalendar extends Component {
         events: [],
         show: false,
         selectedEvent: {},
-        availableEmployees: []
+        availableEmployees: [],
+        selectedEmployee: {}
     };
 
     componentDidMount(){
@@ -29,7 +30,7 @@ class BigCalendar extends Component {
                   start: moment(game.datetime).toDate(),
                   end: moment(game.datetime).add(2,'hours').toDate(),
                   resource: game._id,
-                  isValid: true
+                  isAssigned: game.employeeId ? true : false
                 })
               });
               this.setState({events:games})
@@ -64,10 +65,10 @@ class BigCalendar extends Component {
   }
 
   eventStyleGetter = (event, start, end, isSelected) => {
-    if(event.isValid != true){
-      let backgroundColor = '#c25246';
+    if(event.isAssigned === true){
+      let green = '#73cc5a';
       let style = {
-        backgroundColor: backgroundColor,
+        backgroundColor: green,
         opacity: 0.8,
         color: 'white',
         border: '0px',
@@ -88,16 +89,34 @@ class BigCalendar extends Component {
     this.setState({selectedEvent:data});
     await axios.post("http://localhost:5000/schedule/findAvailableEmployees", req)
     .then(res => {
-      let availableEmployees = []
-      res.data.availableEmployees.forEach(employee => {
-        availableEmployees.push(employee)
-      });
-      this.setState({availableEmployees:availableEmployees})
+      if(res.data.availableEmployees){
+        this.setState({selectedEmployee: res.data.availableEmployees[0]})
+      }
+      this.setState({availableEmployees:res.data.availableEmployees})
     })
-    .catch(err=> err)
+    .catch(err=> console.log(err))
     
   }
+
+  handleSelect = (option) => {
+    this.setState({selectedEmployee:option});
+  }
   
+  handleSave = async (employee, game) => {
+    if(employee && game){
+      const req =  {
+        employeeId: employee._id,
+        gameId: game.resource
+      }
+      await axios.post("http://localhost:5000/schedule/scheduleGame", req)
+      .then(res => {
+        console.log(res.data.message)
+      })
+      .catch(err => console.log(err))
+    }
+    
+    
+  }
 
   render() {
     return (
@@ -116,6 +135,8 @@ class BigCalendar extends Component {
           eventPropGetter={(this.eventStyleGetter)}
         />
         
+
+        {/**** ASSIGN GAME MODAL ****/}
         <div className={ this.state.show ? "modal is-active" : "modal"}>
           <div className="modal-background"></div>
           <div className="modal-card">
@@ -124,8 +145,7 @@ class BigCalendar extends Component {
               <button onClick={() => this.setState({ show: false })} className="delete" aria-label="close"></button>
             </header>
             <section className="modal-card-body">
-            {/* <Dropdown value={selectedEmployee} onChange={handleSelect}> */}
-            <Dropdown>
+            <Dropdown value={this.state.selectedEmployee} onChange={this.handleSelect}>
               {this.state.availableEmployees && this.state.availableEmployees.map(employee => (
                   <Dropdown.Item key={employee._id} value={employee}>
                       {employee.first_name} {employee.last_name}
@@ -134,7 +154,7 @@ class BigCalendar extends Component {
             </Dropdown>
             </section>
             <footer className="modal-card-foot">
-              <button className="button is-success">Save changes</button>
+              <button className="button is-success" onClick={() => this.handleSave(this.state.selectedEmployee, this.state.selectedEvent)}>Save changes</button>
               <button className="button" onClick={() => this.setState({ show: false })}>Cancel</button>
             </footer>
           </div>
