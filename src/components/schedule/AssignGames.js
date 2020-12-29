@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import DatePicker from "react-datepicker";
+import BigCalendar from '../calendar/BigCalendar'
 
 export default function AssignGames() {
     
@@ -43,40 +44,31 @@ export default function AssignGames() {
                     </div>
                 </div>
             </section>
-            <div className="container">
-                <div className="field">
-                    <label className="label">Start Date </label>
-                    <div className="control">
-                    <DatePicker dateFormat={"MMMM d, yy"} selected={startDate} onChange={date => setStartDate(date)} />
-                    </div>
+            <div className="columns">
+                {/* <button className="button" onClick={autoAssign}>Auto Assign</button> */}
+                <div className="column is-two-thirds">
+                    <BigCalendar/>
                 </div>
-                <div className="field">
-                    <label className="label">End Date </label>
-                    <div className="control">
-                    <DatePicker dateFormat={"MMMM d, yy"} selected={endDate} onChange={date => setEndDate(date)} />
-                    </div>
-                </div>
-                <button className="button" onClick={autoAssign}>Auto Assign</button>
-
-                <table className="table is-responsive container">
-                    <thead>
-                        <tr>
-                            <th>Game</th>
-                            <th>Employee</th>
-                        </tr>
-                    </thead>
+                <div className="column is-one-third">
+                    <table className="table is-responsive container">
+                        <thead>
+                            <tr>
+                                <th>Game</th>
+                                <th>Employee</th>
+                            </tr>
+                        </thead>
+                            
+                        <tbody>
+                        {games.map(game => (
+                            <tr key={game._id}>
+                            <td>{game.title}</td>
+                            <td>{game.employeeId ? game.employeeId : "None"}</td>
+                            </tr>
+                        ))}
                         
-                    <tbody>
-                    {games.map(game => (
-                        <tr key={game._id}>
-                        <td>{game.title}</td>
-                        <td>{game.employeeId ? game.employeeId : "None"}</td>
-                        </tr>
-                    ))}
-                    
-                    </tbody>
-                
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     )

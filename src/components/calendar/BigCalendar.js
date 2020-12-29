@@ -5,6 +5,8 @@ import moment from 'moment';
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import axios from 'axios'
+import { Dropdown } from 'react-bulma-components';
+// import ModalContent from './ModalContent'
 
 const localizer = momentLocalizer(moment);
 // const DnDCalendar = withDragAndDrop(Calendar);
@@ -12,6 +14,9 @@ const localizer = momentLocalizer(moment);
 class BigCalendar extends Component {
     state = {
         events: [],
+        show: false,
+        selectedEvent: {},
+        availableEmployees: []
     };
 
     componentDidMount(){
@@ -23,7 +28,8 @@ class BigCalendar extends Component {
                   title: game.title,
                   start: moment(game.datetime).toDate(),
                   end: moment(game.datetime).add(2,'hours').toDate(),
-                  resource: game._id
+                  resource: game._id,
+                  isValid: true
                 })
               });
               this.setState({events:games})
@@ -57,8 +63,39 @@ class BigCalendar extends Component {
     }
   }
 
-  onSelectEvent = (data) => {
-    console.log(data)
+  eventStyleGetter = (event, start, end, isSelected) => {
+    if(event.isValid != true){
+      let backgroundColor = '#c25246';
+      let style = {
+        backgroundColor: backgroundColor,
+        opacity: 0.8,
+        color: 'white',
+        border: '0px',
+        display: 'block'
+      };
+      
+      return {style: style};
+    }
+  }
+  
+  onSelectEvent = async (data) => {
+    const req = {
+      start: data.start,
+      end: data.end
+    }
+    
+    this.setState({show: true});
+    this.setState({selectedEvent:data});
+    await axios.post("http://localhost:5000/schedule/findAvailableEmployees", req)
+    .then(res => {
+      let availableEmployees = []
+      res.data.availableEmployees.forEach(employee => {
+        availableEmployees.push(employee)
+      });
+      this.setState({availableEmployees:availableEmployees})
+    })
+    .catch(err=> err)
+    
   }
   
 
@@ -76,7 +113,32 @@ class BigCalendar extends Component {
           resizable
           style={{ height: "90vh" }}
           onSelectEvent={this.onSelectEvent}
+          eventPropGetter={(this.eventStyleGetter)}
         />
+        
+        <div className={ this.state.show ? "modal is-active" : "modal"}>
+          <div className="modal-background"></div>
+          <div className="modal-card">
+            <header className="modal-card-head">
+              <p className="modal-card-title">{this.state.selectedEvent.title}</p>
+              <button onClick={() => this.setState({ show: false })} className="delete" aria-label="close"></button>
+            </header>
+            <section className="modal-card-body">
+            {/* <Dropdown value={selectedEmployee} onChange={handleSelect}> */}
+            <Dropdown>
+              {this.state.availableEmployees && this.state.availableEmployees.map(employee => (
+                  <Dropdown.Item key={employee._id} value={employee}>
+                      {employee.first_name} {employee.last_name}
+                  </Dropdown.Item>
+              ))}
+            </Dropdown>
+            </section>
+            <footer className="modal-card-foot">
+              <button className="button is-success">Save changes</button>
+              <button className="button" onClick={() => this.setState({ show: false })}>Cancel</button>
+            </footer>
+          </div>
+        </div>
       </div>
     );
   }
