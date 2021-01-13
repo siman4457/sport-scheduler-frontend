@@ -27,13 +27,9 @@ export default function Availability() {
             new_availability: moment(date).startOf('day').toDate(),
             employee: selectedEmployee
         }
-        console.log("add availability triggered")
-        console.log(req)
         
         axios.post("http://localhost:5000/employees/createAvailability", req)
-        .then(res => {
-            console.log(res.data.message)
-            
+        .then(res => {            
             if(selectedEmployee){
                 const updated_availability = [...selectedEmployee.availability, req.new_availability];
                 const newSelectedEmployee = {...selectedEmployee};

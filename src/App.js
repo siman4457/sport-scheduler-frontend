@@ -15,7 +15,6 @@ import Employees from "./components/employees/Employees"
 import Loading from "./components/loading/Loading"
 import Login from "./components/login/Login"
 import CreateGame from "./components/schedule/CreateGame"
-import AssignGames from "./components/schedule/AssignGames"
 import Availability from "./components/employees/Availability"
 import CreateEmployee from "./components/employees/CreateEmployee"
 
@@ -62,7 +61,6 @@ function App() {
             <Route path="/createEmployee" component={CreateEmployee}/>
             <Route path="/loading" exact component={Loading} />
             <Route path="/createGame" component={CreateGame} />
-            <Route path="/assignGames" component={AssignGames} />
             <Route path="/availability" component={Availability}/>
           </Switch>
 

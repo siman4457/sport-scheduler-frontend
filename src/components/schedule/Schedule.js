@@ -7,7 +7,7 @@ function Schedule() {
         <div>
             <Link className="button is-primary" to={'/createGame'}>Add Game</Link>
             &nbsp;
-            <Link className="button is-primary" to={'/assignGames'}>Assign Games</Link>
+            {/* <Link className="button is-primary" to={'/assignGames'}>Assign Games</Link> */}
             <BigCalendar/>
         </div>
     )
