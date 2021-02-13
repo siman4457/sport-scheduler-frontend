@@ -4,7 +4,7 @@ This project was built with React, Express, and MongoDB!
 
 ## Backend code available at:
 
-github.com/siman4457/sports-scheduler-backend
+https://github.com/siman4457/sports-scheduler-backend
 
 ## Available Scripts
 
