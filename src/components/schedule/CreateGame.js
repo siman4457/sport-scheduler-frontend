@@ -5,7 +5,8 @@ import {useForm} from "react-hook-form"
 import axios from "axios"
 
 export default function CreateGame() {
-    const {register, handleSubmit, errors} = useForm();
+    // const {register, handleSubmit, errors} = useForm();
+    const {register, handleSubmit} = useForm();
 
     const [startDate, setStartDate] = useState(new Date())
     const [ageGroups, setAgeGroups] = useState([])

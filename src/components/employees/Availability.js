@@ -1,26 +1,35 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import DatePicker from "react-datepicker";
 import axios from 'axios';
 import { Dropdown } from 'react-bulma-components';
 import moment from 'moment';
+import { useQuery } from 'react-query';
+import SideBar from '../sideBar/SideBar'
  
+const fetchEmployees = async () => {
+    const res = await fetch("http://localhost:5000/employees/getEmployees");
+    return res.json()
+}
 
-export default function Availability() {
+
+const Availability = () => {
     const [employees, setEmployees] = useState([]);
-    const [selectedEmployee, setSelectedEmployee] = useState({})
+    const [selectedEmployee, setSelectedEmployee] = useState({
+        _id: 0,
+        first_name: "",
+        last_name: "",
+    })
     const [date, setDate] = useState(new Date())
 
-
-    useEffect(async () => {
-        await axios.get("http://localhost:5000/employees/getEmployees")
-        .then(res => {
-            setEmployees(res.data.employees)
-            setSelectedEmployee(res.data.employees[0])
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    }, [])
+    useQuery({
+        queryKey: "employees",
+        queryFn: fetchEmployees,
+        onSuccess: (data) => {
+            setEmployees(data.employees)
+            setSelectedEmployee(data.employees[0])
+        }
+        
+    });
     
     const addAvailability = () => {
         let req = {
@@ -65,15 +74,13 @@ export default function Availability() {
     }
 
     return (
-        <div>
-            <section className="hero is-primary">
-                <div className="hero-body">
-                    <div className="container">
-                    <p className="title">Employee Availability</p>
-                    </div>
-                </div>
-            </section>
-            <div className="container">
+        <>
+        <div className="columns">
+            <div className="column is-one-fifth">
+                <SideBar title={"Employees"}/>
+            </div>
+            <div className="column">                
+                <h1 className="title">Availability</h1>
                 <div className="select">
                     <Dropdown value={selectedEmployee} onChange={handleSelect}>
                         {employees && employees.map(employee => (
@@ -83,17 +90,19 @@ export default function Availability() {
                         ))}
                     </Dropdown>
                 </div>
-                <h1>Availability</h1>
+                <br/>
+                <br/>
                 <ul>
                     {selectedEmployee.availability && selectedEmployee.availability.map(day => (
                         <li key={day}><span>{new Date(day).toDateString()}</span> <button className="button" onClick={() => removeAvailability(selectedEmployee, day)}>Remove</button></li>
-                    ))}
-                    
+                    ))}    
                 </ul>
-                
                 <DatePicker dateFormat={"MMMM d, yy"} selected={date} onChange={date => setDate(date)} />
                 <button className="button" onClick={addAvailability}>Add Availability</button>
             </div>
         </div>
+        </>
     )
 }
+
+export default Availability;

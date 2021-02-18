@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState} from 'react';
 
 // function Alert(props) {
 //     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -33,22 +33,6 @@ function Login(){
         }
 
     };
-
-
-    useEffect(() => {
-        onLoad();
-    }, []);
-
-    async function onLoad(){
-        try{
-            //await google authentication
-            // userHasAuthenticated(true)
-        }
-        catch(e){
-            alert(e);
-            console.log("error logging in: " + e);
-        }
-    }
 
     return (
         <section className="hero is-primary is-fullheight">

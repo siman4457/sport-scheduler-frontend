@@ -1,15 +1,20 @@
 import React from 'react'
 import BigCalendar from '../calendar/BigCalendar'
-import {Link} from 'react-router-dom'
+import SideBar from '../sideBar/SideBar';
 
 function Schedule() {
     return (
-        <div>
-            <Link className="button is-primary" to={'/createGame'}>Add Game</Link>
-            &nbsp;
-            {/* <Link className="button is-primary" to={'/assignGames'}>Assign Games</Link> */}
-            <BigCalendar/>
-        </div>
+        <>
+            <div className="columns">
+            <div className="column is-one-fifth">
+                <SideBar title={"Schedule"}/>
+            </div>
+            <div className="column">
+                <br/>
+                <BigCalendar/>
+            </div>
+            </div>
+        </>
     )
     
 }

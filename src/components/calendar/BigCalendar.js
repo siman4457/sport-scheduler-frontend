@@ -4,8 +4,8 @@ import moment from 'moment';
 // import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 // import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import axios from 'axios'
-import { Dropdown } from 'react-bulma-components';
+import axios from 'axios';
+import {  Dropdown } from 'react-bulma-components';
 
 const localizer = momentLocalizer(moment);
 // const DnDCalendar = withDragAndDrop(Calendar);
@@ -39,30 +39,30 @@ class BigCalendar extends Component {
       .catch(err=> err)
     }
 
-    onEventResize = (data) => {
-      const { start, end } = data;
+    // onEventResize = (data) => {
+    //   const { start, end } = data;
 
-      this.setState((state) => {
-        state.events[0].start = start;
-        state.events[0].end = end;
-        return { events: [...state.events] };
-      });
-    };
+    //   this.setState((state) => {
+    //     state.events[0].start = start;
+    //     state.events[0].end = end;
+    //     return { events: [...state.events] };
+    //   });
+    // };
 
-  onEventDrop = (data) => {
-    console.log(data);
-    const { start, end } = data;
-    let event = this.state.events.find(e => e.resource === data.event.resource)
-    let index = this.state.events.findIndex(e => e.resource === data.event.resource)
+  // onEventDrop = (data) => {
+  //   console.log(data);
+  //   const { start, end } = data;
+  //   let event = this.state.events.find(e => e.resource === data.event.resource)
+  //   let index = this.state.events.findIndex(e => e.resource === data.event.resource)
   
-    if(event){
-      this.setState((state) => {
-      state.events[index].start = start;
-      state.events[index].end = end;
-      return { events: [...state.events] };
-      });
-    }
-  }
+  //   if(event){
+  //     this.setState((state) => {
+  //     state.events[index].start = start;
+  //     state.events[index].end = end;
+  //     return { events: [...state.events] };
+  //     });
+  //   }
+  // }
 
   eventStyleGetter = (event, start, end, isSelected) => {
     if(event.isAssigned === true){
@@ -86,8 +86,9 @@ class BigCalendar extends Component {
       end: eventData.end
     }
     
-    this.setState({show: true});
-    this.setState({selectedEvent:eventData});
+    this.setState({show: true,
+      selectedEvent:eventData
+    });
 
     //*** COULD BE OPTIMIZED ****/
     await axios.post("http://localhost:5000/schedule/findAvailableEmployees", req)
@@ -125,15 +126,13 @@ class BigCalendar extends Component {
           state.events[index].isAssigned = true;
           return { events: [...state.events] };
           });
+          //Close modal after saving
+          this.setState({ show: false }) 
         }
-        
-        //Close modal after saving
-        this.setState({ show: false }) 
-
       })
       .catch(err => {
         //TODO: SHOW ERROR WITH ALERT MESSAGE
-        
+
         console.log(err)
       })
     }
@@ -170,6 +169,7 @@ class BigCalendar extends Component {
               <p>To assign or reassign, choose from the dropdown below:</p>
               <Dropdown value={this.state.selectedEmployee} onChange={this.handleSelect}>
                 {this.state.availableEmployees && this.state.availableEmployees.map(employee => (
+                    
                     <Dropdown.Item key={employee._id} value={employee}>
                         {employee.first_name} {employee.last_name}
                     </Dropdown.Item>

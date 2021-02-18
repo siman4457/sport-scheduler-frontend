@@ -26,3 +26,6 @@ yarn-error.log*
 # env
 /server/.vscode
 /.idea
+
+# imgs
+Color Scheme.png
