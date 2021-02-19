@@ -1,19 +1,14 @@
 import React from 'react'
 import BigCalendar from '../calendar/BigCalendar'
-import SideBar from '../sideBar/SideBar';
 
 function Schedule() {
     return (
         <>
-            <div className="columns">
-            <div className="column is-one-fifth">
-                <SideBar title={"Schedule"}/>
-            </div>
-            <div className="column">
+            <div className="container">
                 <br/>
                 <BigCalendar/>
             </div>
-            </div>
+            
         </>
     )
     

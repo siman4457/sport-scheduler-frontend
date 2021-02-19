@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-
 class Dashboard extends Component {
     render() {
         return (
-            <div>
+            <div className="container">
                 <h1>Sport Scheduler</h1>
             </div>
         );

@@ -4,7 +4,6 @@ import axios from 'axios';
 import { Dropdown } from 'react-bulma-components';
 import moment from 'moment';
 import { useQuery } from 'react-query';
-import SideBar from '../sideBar/SideBar'
  
 const fetchEmployees = async () => {
     const res = await fetch("http://localhost:5000/employees/getEmployees");
@@ -75,11 +74,8 @@ const Availability = () => {
 
     return (
         <>
-        <div className="columns">
-            <div className="column is-one-fifth">
-                <SideBar title={"Employees"}/>
-            </div>
-            <div className="column">                
+        
+            <div className="container">                
                 <h1 className="title">Availability</h1>
                 <div className="select">
                     <Dropdown value={selectedEmployee} onChange={handleSelect}>
@@ -100,7 +96,7 @@ const Availability = () => {
                 <DatePicker dateFormat={"MMMM d, yy"} selected={date} onChange={date => setDate(date)} />
                 <button className="button" onClick={addAvailability}>Add Availability</button>
             </div>
-        </div>
+        
         </>
     )
 }

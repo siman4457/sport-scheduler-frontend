@@ -29,13 +29,11 @@ export default function CreateGame() {
 
     return (
         <div>
-            <section className="hero is-primary">
-                <div className="hero-body">
-                    <div className="container">
-                    <p className="title">Create Game</p>
-                    </div>
-                </div>
-            </section>
+            <div className="container">
+            <p className="title">Create Game</p>
+            </div>
+            <br/>
+                
             <div className="container">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="field">

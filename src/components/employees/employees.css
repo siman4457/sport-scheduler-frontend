@@ -1,0 +1,85 @@
+.title a {
+  text-decoration: underline;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+@media screen and (max-width: 800px) {
+  .is-responsive {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: block;
+    position: relative;
+  }
+  td:empty:before {
+    content: '\00a0';
+  }
+  th,
+  td {
+    margin: 0;
+    vertical-align: top;
+  }
+  th {
+    text-align: left;
+  }
+  thead {
+    border-right: solid 2px #dbdbdb;
+    display: block;
+    float: left;
+  }
+  thead tr {
+    display: block;
+    padding: 0 10px 0 0;
+  }
+  thead tr th::before {
+    content: "\00a0";
+  }
+  thead td,
+  thead th {
+    border-width: 0 0 1px;
+  }
+  tbody {
+    display: block;
+    width: auto;
+    position: relative;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  tbody tr {
+    display: inline-block;
+    vertical-align: top;
+  }
+  th {
+    display: block;
+    text-align: right;
+  }
+  td {
+    display: block;
+    min-height: 1.25em;
+    text-align: left;
+  }
+  th:last-child,
+  td:last-child {
+    border-bottom-width: 0;
+  }
+  tr:last-child td:not(:last-child) {
+    border: 1px solid #dbdbdb;
+    border-width: 0 0 1px;
+  }
+  .is-bordered td,
+  .is-bordered th {
+    border-width: 1px;
+  }
+  .is-bordered tr td:last-child,
+  .is-bordered tr th:last-child {
+    border-bottom-width: 1px;
+  }
+  .is-bordered tr:last-child td,
+  .is-bordered tr:last-child th {
+    border-width: 1px;
+  }
+}
+/*# sourceMappingURL=employees.css.map */

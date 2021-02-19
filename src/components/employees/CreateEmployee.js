@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import { useForm } from 'react-hook-form'
-import SideBar from '../sideBar/SideBar'
 // import { useMutation } from 'react-query'
 import { Notification, Button } from 'react-bulma-components'
 import axios from 'axios'
@@ -70,11 +69,8 @@ export default function CreateEmployee() {
 
     return (
         <>
-        <div className="columns">
-            <div className="column is-one-fifth">
-                <SideBar title={"Employees"}/>
-            </div>
-            <div className="column is-three-fifths">
+        
+            <div className="container">
                 <br/>
                 <h1 className="title">Add Employees</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -215,7 +211,7 @@ export default function CreateEmployee() {
                     </div>
                 </form>
             </div>
-        </div>
+        
         </>
     )
 }

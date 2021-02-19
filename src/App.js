@@ -5,7 +5,9 @@ import {
   Route
 } from "react-router-dom";
 import './App.css';
-import './App.sass';
+import './App.scss';
+import './_bulma.sass'
+import SideNav from './components/sideNav/SideNav'
 import Dashboard from "./components/dashboard/Dashboard";
 import SignedInNav from "./components/signedInNav/SignedInNav"
 import SignedOutNav from "./components/signedOutNav/SignedOutNav"
@@ -40,6 +42,7 @@ function App() {
         <Router>
           <div className="App">
             <Nav isLoggedIn={true}/>
+            <SideNav/>
             <Switch>            
               <Route path="/login" exact component={Login}/>
               <Route path="/" exact component={Dashboard} />
