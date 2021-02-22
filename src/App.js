@@ -18,6 +18,7 @@ import Login from "./components/login/Login"
 import CreateGame from "./components/schedule/CreateGame"
 import Availability from "./components/employees/Availability"
 import CreateEmployee from "./components/employees/CreateEmployee"
+import TopBar from './topBar/TopBar';
 
 function App() {
   //https://stackoverflow.com/questions/31084779/how-to-restrict-access-to-routes-in-react-router
@@ -35,26 +36,25 @@ function App() {
     }
   }
 
-  
-
   return (
       
-        <Router>
-          <div className="App">
-            <Nav isLoggedIn={true}/>
-            <SideNav/>
-            <Switch>            
-              <Route path="/login" exact component={Login}/>
-              <Route path="/" exact component={Dashboard} />
-              <Route path="/schedule" exact component={Schedule}/>
-              <Route path="/employees" exact component={Employees}/>
-              <Route path="/createEmployee" component={CreateEmployee}/>
-              <Route path="/loading" exact component={Loading} />
-              <Route path="/createGame" component={CreateGame} />
-              <Route path="/availability" component={Availability}/>
-            </Switch>
-          </div>
-        </Router>
+    <Router>
+      {/* <Nav isLoggedIn={true}/> */}
+      <TopBar/>
+      <div className="App">
+          <SideNav/>
+          <Switch>            
+            <Route path="/login" exact component={Login}/>
+            <Route path="/" exact component={Dashboard} />
+            <Route path="/schedule" exact component={Schedule}/>
+            <Route path="/employees" exact component={Employees}/>
+            <Route path="/createEmployee" component={CreateEmployee}/>
+            <Route path="/loading" exact component={Loading} />
+            <Route path="/createGame" component={CreateGame} />
+            <Route path="/availability" component={Availability}/>
+          </Switch>
+      </div>
+    </Router>
       
       
   );

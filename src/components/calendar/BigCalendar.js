@@ -20,7 +20,7 @@ class BigCalendar extends Component {
     };
 
     componentDidMount(){
-        axios.get("http://localhost:5000/games/getGames").then(
+        axios.get("/games/getGames").then(
           res => {
               let games = []
               res.data.games.forEach(game => {

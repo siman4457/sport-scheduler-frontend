@@ -4,9 +4,17 @@ import "react-datepicker/dist/react-datepicker.css"
 import {useForm} from "react-hook-form"
 import axios from "axios"
 
+let defaultValues = {
+    title: "",
+    fieldNumber: "",
+    location: "",
+    address: "",
+    ageGroup: "",
+    filmType: ""
+  };
+
 export default function CreateGame() {
-    // const {register, handleSubmit, errors} = useForm();
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, reset} = useForm();
 
     const [startDate, setStartDate] = useState(new Date())
     const [ageGroups, setAgeGroups] = useState([])
@@ -17,6 +25,7 @@ export default function CreateGame() {
         axios.post("http://localhost:5000/games/createGame", data)
         .then(res => {
             console.log(res.data.message)
+            reset();
         })
         .catch( err => console.log(err))
     }
@@ -28,82 +37,144 @@ export default function CreateGame() {
     }, [])
 
     return (
-        <div>
+        <div className="main" id="main">
             <div className="container">
-            <p className="title">Create Game</p>
+            <p className="title">Add Game</p>
             </div>
             <br/>
                 
-            <div className="container">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="field">
-                        <label className="label">Title</label>
-                        <div className="control">
-                            <input className="input" type='text' name='title' ref={register}/>
-                        </div>
-                    </div>
-
-                    <div className="field">
-                        <label className="label">Date and Time </label>
-                        <div className="control">
-                            <DatePicker dateFormat={"MMMM d, yy h:mm aa"} showTimeSelect timeIntervals={15} selected={startDate} onChange={date => setStartDate(date)} />
-                        </div>
-                    </div>
-
-                    <div className="field">
-                        <label className="label">Age Group</label>
-                        <div className="control">
-                            <div className="select">
-                                <select name="ageGroup" ref={register}>
-                                    {ageGroups.map(ageGroup => (
-                                        <option>{ageGroup}</option>
-                                    ))}
-                                </select>
+            
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="columns is-multiline">
+                    <div className="column is-9">
+                        <div class="field is-horizontal">
+                            <div className="field-label is-normal">
+                                <label className="label">Description</label>
+                            </div>
+                            <div className="field-body">
+                                <div class="field">
+                                    <p class="control is-expanded">
+                                        <input className="input" type='text' name='title' placeholder="Title" ref={register}/>
+                                        <span class="icon is-small is-left">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="field">
+									<p class="control is-expanded">
+                                        <input className="input" type='text' name='fieldNumber' placeholder="Field Number" ref={register}/>
+									</p>
+								</div>
                             </div>
                         </div>
-                    </div>
                     
-                    <div className="field">
-                        <label className="label">Film Type</label>
-                        <div className="control">
-                            <div className="select">
-                                <select name="filmType" ref={register}>
-                                    <option>Manual Film</option>
-                                    <option>Veo</option>
-                                    <option>Live Stream</option>
-                                </select>
+                        <div class="field is-horizontal">
+							<div class="field-label is-normal">
+								<label class="label">Location</label>
+							</div>
+
+                            <div className="field-body">
+                                <div class="field">
+									<p class="control is-expanded">
+                                        <input className="input" type='text' name='location' placeholder="Toyota Soccer Complex" ref={register}/>
+									</p>
+								</div>
+                            </div>
+                        </div>
+
+                        <div class="field is-horizontal">
+							<div class="field-label is-normal">
+								<label class="label">Address</label>
+							</div>
+
+                            <div className="field-body">
+                                <div class="field">
+									<p class="control is-expanded">
+                                        <input className="input" type='text' name='address' placeholder="9200 World Cup Way, Ste 202" ref={register}/>
+									</p>
+								</div>
+                            </div>
+                        </div>
+                    
+                        <div class="field is-horizontal">
+							<div class="field-label is-normal">
+								<label class="label">Date</label>
+							</div>
+
+                            <div className="field-body">
+                                <div className="field">
+                                    <div className="control">
+                                        <DatePicker 
+                                        className="input"
+                                        dateFormat={"MMMM d, yy h:mm aa"} 
+                                        showTimeSelect 
+                                        timeIntervals={15} 
+                                        selected={startDate} 
+                                        onChange={date => setStartDate(date)} 
+                                        popperPlacement="bottom"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </div>
+
+                        <div class="field is-horizontal">
+							<div class="field-label is-normal">
+								<label class="label">Age Group</label>
+							</div>
+                            <div className="field-body">
+                                <div className="field">
+                                    <div className="control">
+                                        <div className="select">
+                                            <select name="ageGroup" ref={register}>
+                                                {ageGroups.map(ageGroup => (
+                                                    <option>{ageGroup}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </div>
+
+                        <div class="field is-horizontal">
+							<div class="field-label is-normal">
+								<label class="label">Film Type</label>
+							</div>
+                            <div className="field-body">
+                                <div className="field">
+                                    <div className="control">
+                                        <div className="select">
+                                            <select name="filmType" ref={register}>
+                                                <option>Manual Film</option>
+                                                <option>Veo</option>
+                                                <option>Live Stream</option>
+                                            </select>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </div>
+                        <br/>
+                        <div className="field is-grouped">
+                            <div className="control">
+                                <button className="button is-link" type="submit">Submit</button>
+                            </div>
+                            <div className="control">
+                                <button 
+                                className="button is-link is-light"
+                                onClick={() => reset()}>
+                                Cancel
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div className="field">
-                        <label className="label">Field</label>
-                        <div className="control">
-                            <input className="input" type='text' name='fieldNumber' ref={register}/>
-                        </div>
-                    </div>
-                    <div className="field">
-                        <label className="label">Location</label>
-                        <div className="control">
-                            <input className="input" type='text' name='location' ref={register}/>
-                        </div>
-                    </div>
-                    <div className="field">
-                        <label className="label">Address</label>
-                        <div className="control">
-                            <input className="input" type='text' name='address' ref={register}/>
-                        </div>
-                    </div>
-
-                    <div className="field is-grouped">
-                        <div className="control">
-                            <button className="button is-link" type="submit">Submit</button>
-                        </div>
-                        <div className="control">
-                            <button className="button is-link is-light">Cancel</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                </div>
+            </form> 
+            
         </div>
     )
 }

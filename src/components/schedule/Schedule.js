@@ -4,10 +4,10 @@ import BigCalendar from '../calendar/BigCalendar'
 function Schedule() {
     return (
         <>
-            <div className="container">
+            <main className="main" id="main">
                 <br/>
                 <BigCalendar/>
-            </div>
+            </main>
             
         </>
     )

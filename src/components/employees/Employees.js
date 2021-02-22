@@ -1,18 +1,19 @@
 import React from 'react';
-import "./employees.sass"
-import { useQuery } from 'react-query';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-
+// import "./employees.sass";
+import { useQuery , useMutation } from 'react-query';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+ 
 const fetchEmployees = async () => {
-    const res = await fetch("http://localhost:5000/employees/getEmployees");
+    const res = await fetch("employees/getEmployees");
     return res.json()
 }
 
-const deleteEmployee = (employee) => {
-    console.log("Delete triggered")
-    console.log(employee)
-}
+// const deleteEmployee = (employee) => {
+//     console.log("Delete triggered")
+//     console.log(employee)
+// }
 
 const editEmployee = (employee) => {
     console.log("Edit triggered")
@@ -20,16 +21,31 @@ const editEmployee = (employee) => {
 }
 
 const Employees = () => {
-    // const [data, loading] = useFetch("http://localhost:5000/employees/getEmployees");
     const {data, status} = useQuery('data', fetchEmployees);
-    
+    const deleteEmployee = useMutation(async employee => {
+        // console.log("/employees/" + employee._id);
+        await axios.delete("employees/deleteEmployee/" + employee._id)
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+        
+    });
+
     return (
-        <>
-            <article className="container">
-                <section>
-                    <br/>
-                    <h1 className="title">View Employees</h1>
-                    <table className="table is-responsive container">
+        <div className="main" id="main">
+        {deleteEmployee.isLoading ? (
+            "Deleting Employee..."
+        ) : (
+            <>
+                
+            <br/>
+            <h1 className="title">View Employees</h1>
+            <div class="columns is-multiline">
+                <div class="column">
+                    <table class="table is-striped is-narrow is-fullwidth">
                     <thead>
                         <tr>
                         <th>Name</th>
@@ -61,15 +77,19 @@ const Employees = () => {
                         <td>{employee.canFilmFootball ? ("Yes") : ("No")}</td>
                         <td>{employee.canLiveStream ? ("Yes") : ("No")}</td>
                         <td>{employee.address}</td>
-                        <td><FontAwesomeIcon icon={faEdit} type="button" onClick={() => editEmployee(employee)} /></td>
-                        <td><FontAwesomeIcon icon={faTrashAlt} type="button" onClick={() => deleteEmployee(employee)} /></td>
+                        <td><button className="button is-primary" onClick={() => editEmployee(employee)} type="button"><FontAwesomeIcon icon={faEdit}/>&nbsp;<span>Edit</span></button></td>
+                        <td><button className="button is-danger" onClick={() => deleteEmployee.mutate(employee)} type="button"><FontAwesomeIcon icon={faTrashAlt}/>&nbsp;<span>Delete</span></button></td>
                         </tr>
                         )))}
                     </tbody>
                     </table>
-                </section>
-            </article>
-        </>
+                </div>
+            </div>
+        
+            </>
+        )
+        }
+        </div>
     );
 }
 

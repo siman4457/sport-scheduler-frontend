@@ -75,27 +75,27 @@ const Availability = () => {
     return (
         <>
         
-            <div className="container">                
-                <h1 className="title">Availability</h1>
-                <div className="select">
-                    <Dropdown value={selectedEmployee} onChange={handleSelect}>
-                        {employees && employees.map(employee => (
-                            <Dropdown.Item key={employee._id} value={employee}>
-                                {employee.first_name} {employee.last_name}
-                            </Dropdown.Item>
-                        ))}
-                    </Dropdown>
-                </div>
-                <br/>
-                <br/>
-                <ul>
-                    {selectedEmployee.availability && selectedEmployee.availability.map(day => (
-                        <li key={day}><span>{new Date(day).toDateString()}</span> <button className="button" onClick={() => removeAvailability(selectedEmployee, day)}>Remove</button></li>
-                    ))}    
-                </ul>
-                <DatePicker dateFormat={"MMMM d, yy"} selected={date} onChange={date => setDate(date)} />
-                <button className="button" onClick={addAvailability}>Add Availability</button>
+        <div className="main" id="main">               
+            <h1 className="title">Availability</h1>
+            <div className="select">
+                <Dropdown value={selectedEmployee} onChange={handleSelect}>
+                    {employees && employees.map(employee => (
+                        <Dropdown.Item key={employee._id} value={employee}>
+                            {employee.first_name} {employee.last_name}
+                        </Dropdown.Item>
+                    ))}
+                </Dropdown>
             </div>
+            <br/>
+            <br/>
+            <ul>
+                {selectedEmployee.availability && selectedEmployee.availability.map(day => (
+                    <li key={day}><span>{new Date(day).toDateString()}</span> <button className="button" onClick={() => removeAvailability(selectedEmployee, day)}>Remove</button></li>
+                ))}    
+            </ul>
+            <DatePicker dateFormat={"MMMM d, yy"} selected={date} onChange={date => setDate(date)} />
+            <button className="button" onClick={addAvailability}>Add Availability</button>
+        </div>
         
         </>
     )
