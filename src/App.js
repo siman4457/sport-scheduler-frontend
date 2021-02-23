@@ -5,8 +5,8 @@ import {
   Route
 } from "react-router-dom";
 import './App.css';
-import './App.scss';
-import './_bulma.sass'
+import './scss/App.scss';
+import './scss/vendor/_bulma.sass'
 import SideNav from './components/sideNav/SideNav'
 import Dashboard from "./components/dashboard/Dashboard";
 import SignedInNav from "./components/signedInNav/SignedInNav"
@@ -18,7 +18,7 @@ import Login from "./components/login/Login"
 import CreateGame from "./components/schedule/CreateGame"
 import Availability from "./components/employees/Availability"
 import CreateEmployee from "./components/employees/CreateEmployee"
-import TopBar from './topBar/TopBar';
+import TopBar from "./components/topBar/TopBar"
 
 function App() {
   //https://stackoverflow.com/questions/31084779/how-to-restrict-access-to-routes-in-react-router

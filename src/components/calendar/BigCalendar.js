@@ -159,31 +159,31 @@ class BigCalendar extends Component {
         {/**** ASSIGN GAME MODAL ****/}
         <div className={ this.state.show ? "modal increased-height is-active" : "modal increased-height"}>
           <div className="modal-background"></div>
-          <div className="modal-card">
-            <header className="modal-card-head">
-              <p className="modal-card-title">{this.state.selectedEvent.title}</p>
-              <button onClick={() => this.setState({ show: false })} className="delete" aria-label="close"></button>
-            </header>
-            <section className="modal-card-body">
-              <p>This game is assigned to: {this.state.selectedEvent.employeeId ? this.state.selectedEvent.employeeId : "No one"}</p>
-              <p>To assign or reassign, choose from the dropdown below:</p>
-              <Dropdown value={this.state.selectedEmployee} onChange={this.handleSelect}>
-                {this.state.availableEmployees && this.state.availableEmployees.map(employee => (
-                    
-                    <Dropdown.Item key={employee._id} value={employee}>
-                        {employee.first_name} {employee.last_name}
-                    </Dropdown.Item>
-                ))}
-              </Dropdown>
-              <br/>
-              <br/>
-              <br/>
-            </section>
-            <footer className="modal-card-foot">
-              <button className="button is-success" onClick={() => this.handleSave(this.state.selectedEmployee, this.state.selectedEvent)}>Save changes</button>
-              <button className="button" onClick={() => this.setState({ show: false })}>Cancel</button>
-            </footer>
-          </div>
+            <div className="modal-card">
+              <header className="modal-card-head">
+                <p className="modal-card-title">{this.state.selectedEvent.title}</p>
+                <button onClick={() => this.setState({ show: false })} className="delete" aria-label="close"></button>
+              </header>
+              <section className="modal-card-body">
+                <p className="has-text-black">This game is assigned to: {this.state.selectedEvent.employeeId ? this.state.selectedEvent.employeeId : "No one"}</p>
+                <p className="has-text-black">To assign or reassign, choose from the dropdown below:</p>
+                <Dropdown value={this.state.selectedEmployee} onChange={this.handleSelect}>
+                  {this.state.availableEmployees && this.state.availableEmployees.map(employee => (
+                      
+                      <Dropdown.Item className="has-text-black" key={employee._id} value={employee}>
+                          {employee.first_name} {employee.last_name}
+                      </Dropdown.Item>
+                  ))}
+                </Dropdown>
+                <br/>
+                <br/>
+                <br/>
+              </section>
+              <footer className="modal-card-foot">
+                <button className="button is-success" onClick={() => this.handleSave(this.state.selectedEmployee, this.state.selectedEvent)}>Save changes</button>
+                <button className="button" onClick={() => this.setState({ show: false })}>Cancel</button>
+              </footer>
+            </div>
         </div>
       </div>
     );

@@ -80,7 +80,7 @@ const Availability = () => {
             <div className="select">
                 <Dropdown value={selectedEmployee} onChange={handleSelect}>
                     {employees && employees.map(employee => (
-                        <Dropdown.Item key={employee._id} value={employee}>
+                        <Dropdown.Item className="has-text-black" key={employee._id} value={employee}>
                             {employee.first_name} {employee.last_name}
                         </Dropdown.Item>
                     ))}
