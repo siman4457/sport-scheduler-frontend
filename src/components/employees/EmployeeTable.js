@@ -2,27 +2,12 @@ import { React, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bulma-components';
-import EditModal from './EditModal';
+import { Link } from 'react-router-dom';
+
 
 
 
 const EmployeeTable = ({data, status, deleteEmployee}) => {
-    const [showEdit, setShowEdit] = useState(false);
-    const [employeeToEdit, setEmployeeToEdit] = useState({});
-
-    
-    const editEmployee = (employee, showModal) => {
-        if (showEdit === false){
-            setShowEdit(true);
-            setEmployeeToEdit(employee);
-        }
-        else{
-            setShowEdit(false);
-        }
-    }
-    
-    const closeEditEmployee = () => setShowEdit(false);;
-    
     return (
         <>
         <table className="table is-striped is-narrow is-fullwidth">
@@ -60,21 +45,15 @@ const EmployeeTable = ({data, status, deleteEmployee}) => {
                     <td>{employee.canLiveStream ? ("Yes") : ("No")}</td>
                     <td>{employee.address}</td>
                     <td>
-                        <button 
-                        className="button is-primary" 
-                        onClick={() => editEmployee(employee)} 
-                        type="button">
+                        <Link className="button is-primary" to={"/employees/edit/" + employee._id}>                            
                             <FontAwesomeIcon icon={faEdit}/>&nbsp;<span>Edit</span>
-                        </button>
+                        </Link>
                     </td>
                     <td><button className="button is-danger" onClick={() => deleteEmployee.mutate(employee)} type="button"><FontAwesomeIcon icon={faTrashAlt}/>&nbsp;<span>Delete</span></button></td>
                     </tr>
-                    )))}
+                )))}
             </tbody>
-            </table>
-            <Modal show={showEdit} onClose={closeEditEmployee}>
-                <EditModal employee={employeeToEdit} setShowEdit={setShowEdit}/>
-            </Modal>
+        </table>
         </>
     )
 }

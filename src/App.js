@@ -19,6 +19,7 @@ import CreateGame from "./components/schedule/CreateGame"
 import Availability from "./components/employees/Availability"
 import CreateEmployee from "./components/employees/CreateEmployee"
 import TopBar from "./components/topBar/TopBar"
+import EditEmployee from "./components/employees/EditEmployee"
 
 function App() {
   //https://stackoverflow.com/questions/31084779/how-to-restrict-access-to-routes-in-react-router
@@ -48,6 +49,7 @@ function App() {
             <Route path="/" exact component={Dashboard} />
             <Route path="/schedule" exact component={Schedule}/>
             <Route path="/employees" exact component={Employees}/>
+            <Route path="/employees/edit/:id" exact component={EditEmployee}/>
             <Route path="/createEmployee" component={CreateEmployee}/>
             <Route path="/loading" exact component={Loading} />
             <Route path="/createGame" component={CreateGame} />

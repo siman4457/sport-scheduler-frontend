@@ -154,7 +154,7 @@ export default function CreateEmployee() {
                                 message: "Not enough digits for phone number" // JS only: <p>error message</p> TS only support string
                                 }
                         })}/>
-                        {errors.phoneNumber && <strong>Your input is required. Make sure you only input 9 digits.</strong>}
+                        {errors.phoneNumber && <strong>Your input is required. Make sure you only input 10 digits.</strong>}
                     </div>
                 </div>
 
