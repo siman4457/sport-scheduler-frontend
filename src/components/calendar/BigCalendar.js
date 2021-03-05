@@ -123,8 +123,8 @@ class BigCalendar extends Component {
 
         if(event){
           this.setState((state) => {
-          state.events[index].isAssigned = true;
-          return { events: [...state.events] };
+            state.events[index].isAssigned = true;
+            return { events: [...state.events] };
           });
           //Close modal after saving
           this.setState({ show: false }) 
@@ -132,8 +132,32 @@ class BigCalendar extends Component {
       })
       .catch(err => {
         //TODO: SHOW ERROR WITH ALERT MESSAGE
-
         console.log(err)
+      })
+    }
+  }
+
+  handleDelete = async (game) => {
+
+    if(game){
+      const req = {
+        id: game.resource
+      }      
+      let index = this.state.events.findIndex(e => e.resource === game.resource);
+      
+      await axios.delete("games/deleteGame", {data: req})
+      .then(res =>{
+        console.log(res.data.message);
+
+        this.setState(state =>{
+          state.events.slice(index);
+        })
+        
+        //Close modal
+        this.setState({ show: false }) 
+      })
+      .catch(err => {
+        console.log("Error in handleDelete: " , err);
       })
     }
   }
@@ -182,6 +206,7 @@ class BigCalendar extends Component {
               <footer className="modal-card-foot">
                 <button className="button is-success" onClick={() => this.handleSave(this.state.selectedEmployee, this.state.selectedEvent)}>Save changes</button>
                 <button className="button" onClick={() => this.setState({ show: false })}>Cancel</button>
+                <button className="button is-danger" onClick={() => this.handleDelete(this.state.selectedEvent)}>Delete</button>
               </footer>
             </div>
         </div>

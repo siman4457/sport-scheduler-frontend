@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form'
 import { useQuery , useMutation } from 'react-query';
-import { Notification, Button } from 'react-bulma-components'
-import axios from 'axios'
+import axios from 'axios';
 
 const fetchEmployee = async (id) => {
     const res = await fetch(`/employees/getEmployee/${id}`);

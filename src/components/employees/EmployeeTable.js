@@ -1,11 +1,7 @@
 import { React, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { Modal } from 'react-bulma-components';
 import { Link } from 'react-router-dom';
-
-
-
 
 const EmployeeTable = ({data, status, deleteEmployee}) => {
     return (

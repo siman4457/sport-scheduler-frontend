@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 // import "./employees.sass";
 import { useQuery , useMutation } from 'react-query';
 import axios from 'axios';
@@ -10,20 +10,27 @@ const fetchEmployees = async () => {
 }
 
 const Employees = () => {
-    const {data, status} = useQuery('data', fetchEmployees);
+    const {data, status, refetch} = useQuery('employees', fetchEmployees);
 
     const deleteEmployee = useMutation(async employee => {
         await axios.delete("employees/deleteEmployee/" + employee._id)
         .then(res => {
-            console.log(res);
+            if(res.status === 200){
+                //TODO: Show success toast for successfully deleted
+                refetch();
+            }
+            else{
+                //TODO: Show error toast for "unable to delete"
+                refetch();
+                console.log(res);
+            }
         })
         .catch(err => {
             console.log(err);
+            refetch();
         })
         
     });
-
-    
 
     return (
         <div className="main" id="main">
