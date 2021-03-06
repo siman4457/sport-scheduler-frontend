@@ -47,58 +47,58 @@ export default function CreateGame() {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="columns is-multiline">
                     <div className="column is-9">
-                        <div class="field is-horizontal">
+                        <div className="field is-horizontal">
                             <div className="field-label is-normal">
                                 <label className="label">Description</label>
                             </div>
                             <div className="field-body">
-                                <div class="field">
-                                    <p class="control is-expanded">
+                                <div className="field">
+                                    <p className="control is-expanded">
                                         <input className="input" type='text' name='title' placeholder="Title" ref={register}/>
-                                        <span class="icon is-small is-left">
-                                            <i class="fa fa-user"></i>
+                                        <span className="icon is-small is-left">
+                                            <i className="fa fa-user"></i>
                                         </span>
                                     </p>
                                 </div>
-                                <div class="field">
-									<p class="control is-expanded">
+                                <div className="field">
+									<p className="control is-expanded">
                                         <input className="input" type='text' name='fieldNumber' placeholder="Field Number" ref={register}/>
 									</p>
 								</div>
                             </div>
                         </div>
                     
-                        <div class="field is-horizontal">
-							<div class="field-label is-normal">
-								<label class="label">Location</label>
+                        <div className="field is-horizontal">
+							<div className="field-label is-normal">
+								<label className="label">Location</label>
 							</div>
 
                             <div className="field-body">
-                                <div class="field">
-									<p class="control is-expanded">
+                                <div className="field">
+									<p className="control is-expanded">
                                         <input className="input" type='text' name='location' placeholder="Toyota Soccer Complex" ref={register}/>
 									</p>
 								</div>
                             </div>
                         </div>
 
-                        <div class="field is-horizontal">
-							<div class="field-label is-normal">
-								<label class="label">Address</label>
+                        <div className="field is-horizontal">
+							<div className="field-label is-normal">
+								<label className="label">Address</label>
 							</div>
 
                             <div className="field-body">
-                                <div class="field">
-									<p class="control is-expanded">
+                                <div className="field">
+									<p className="control is-expanded">
                                         <input className="input" type='text' name='address' placeholder="9200 World Cup Way, Ste 202" ref={register}/>
 									</p>
 								</div>
                             </div>
                         </div>
                     
-                        <div class="field is-horizontal">
-							<div class="field-label is-normal">
-								<label class="label">Date</label>
+                        <div className="field is-horizontal">
+							<div className="field-label is-normal">
+								<label className="label">Date</label>
 							</div>
 
                             <div className="field-body">
@@ -119,9 +119,9 @@ export default function CreateGame() {
                         
                         </div>
 
-                        <div class="field is-horizontal">
-							<div class="field-label is-normal">
-								<label class="label">Age Group</label>
+                        <div className="field is-horizontal">
+							<div className="field-label is-normal">
+								<label className="label">Age Group</label>
 							</div>
                             <div className="field-body">
                                 <div className="field">
@@ -129,7 +129,7 @@ export default function CreateGame() {
                                         <div className="select">
                                             <select name="ageGroup" ref={register}>
                                                 {ageGroups.map(ageGroup => (
-                                                    <option>{ageGroup}</option>
+                                                    <option key={ageGroup}>{ageGroup}</option>
                                                 ))}
                                             </select>
                                         </div>
@@ -139,9 +139,9 @@ export default function CreateGame() {
                         
                         </div>
 
-                        <div class="field is-horizontal">
-							<div class="field-label is-normal">
-								<label class="label">Film Type</label>
+                        <div className="field is-horizontal">
+							<div className="field-label is-normal">
+								<label className="label">Film Type</label>
 							</div>
                             <div className="field-body">
                                 <div className="field">

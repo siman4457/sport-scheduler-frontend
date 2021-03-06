@@ -74,7 +74,6 @@ const Availability = () => {
 
     return (
         <>
-        
         <div className="main" id="main">               
             <h1 className="title">Availability</h1>
             <div className="select">

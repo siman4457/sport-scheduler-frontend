@@ -41,7 +41,7 @@ const EmployeeTable = ({data, status, deleteEmployee}) => {
                     <td>{employee.canLiveStream ? ("Yes") : ("No")}</td>
                     <td>{employee.address}</td>
                     <td>
-                        <Link className="button is-primary" to={"/employees/edit/" + employee._id}>                            
+                        <Link className="button is-primary" to={`/employees/edit/${employee._id}`}>                            
                             <FontAwesomeIcon icon={faEdit}/>&nbsp;<span>Edit</span>
                         </Link>
                     </td>

@@ -29,7 +29,6 @@ const Employees = () => {
             console.log(err);
             refetch();
         })
-        
     });
 
     return (
