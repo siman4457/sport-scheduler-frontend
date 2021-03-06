@@ -7,7 +7,6 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import axios from 'axios';
 import {  Dropdown } from 'react-bulma-components';
 import { useHistory } from 'react-router-dom';
-import { Link } from "react-router-dom";
 
 const localizer = momentLocalizer(moment);
 // const DnDCalendar = withDragAndDrop(Calendar);
@@ -43,8 +42,6 @@ export default function BigCalendar() {
     const [availableEmployees, setAvailableEmployees] = useState([]);
     const [selectedEmployee, setSelectedEmployee] = useState({});
     const history = useHistory();
-
-    // const {data, status} = useQuery("games", fetchGames);
 
     useEffect(() => {
       axios.get("/games/getGames").then(
@@ -164,7 +161,6 @@ export default function BigCalendar() {
 
     const handleEdit = (event) => {
       const game_id = event.resource;
-      console.log({game_id})
       history.push(`/games/edit/${game_id}`);
     }
 
@@ -178,7 +174,10 @@ export default function BigCalendar() {
             events={events}
             localizer={localizer} 
             resizable         
-            style={{ height: "90vh" }}
+            style={{ 
+              backgroundColor: "#edeee8",
+              color: "black"
+            }}
             onSelectEvent={onSelectEvent}
             eventPropGetter={eventStyleGetter}
           />

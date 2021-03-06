@@ -5,6 +5,8 @@ import {useForm} from "react-hook-form"
 import { useParams } from 'react-router-dom';
 import axios from "axios"
 import { useQuery } from 'react-query';
+import { useHistory } from 'react-router-dom';
+
 
 let defaultValues = {
     title: "",
@@ -16,34 +18,40 @@ let defaultValues = {
   };
 
 const fetchGame = async(id) => {
-    const res = await axios.get(`/games/getGame/${id}`)
-    return res.json();
+    const {data} = await axios.get(`/games/getGame/${id}`)
+    return data.game;
 }
 
 export default function EditGame() {
     let { id } = useParams();
-    const [startDate, setStartDate] = useState(new Date())
-    const [ageGroups, setAgeGroups] = useState([])
-
+    const [startDate, setStartDate] = useState(new Date());
+    const [ageGroups, setAgeGroups] = useState([]);
+    const [gameToEdit, setGameToEdit] = useState(defaultValues);
+    const history = useHistory();
+    
+    const {register, handleSubmit, reset, setValue} = useForm();
+    
     const {status} = useQuery({
         queryKey: "game",
         queryFn: () => fetchGame(id),
         onSuccess: (data) => {
-            console.log({data});
+            setGameToEdit(data);
+            for(const property in data){
+                // setValue("id", data.employee._id);
+                setValue(property, data[property])
+            }
         } 
     });
 
-    const {register, handleSubmit, reset} = useForm();
 
-
-    const onSubmit = async data => {
-        data["datetime"] = new Date(startDate.toISOString())
-        // console.log(data)
-        axios.post("/editGame", data)
+    const onSubmit = async req => {
+        req["_id"] = gameToEdit._id;
+        req["datetime"] = new Date(startDate.toISOString())
+        
+        axios.post("/games/updateGame", req)
         .then(res => {
             console.log(res.data.message)
-            reset();
-
+            history.push('/schedule');
         })
         .catch( err => console.log(err))
     }
@@ -54,145 +62,157 @@ export default function EditGame() {
         )
     }, [])
 
+    const cancel = (e) => {
+        e.preventDefault();
+        reset();
+    }
+
     return (
         <div className="main" id="main">
-            <div className="container">
-            <p className="title">Add Game</p>
-            </div>
             <br/>
-                
-            
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="columns is-multiline">
-                    <div className="column is-9">
-                        <div class="field is-horizontal">
-                            <div className="field-label is-normal">
-                                <label className="label">Description</label>
-                            </div>
-                            <div className="field-body">
-                                <div class="field">
-                                    <p class="control is-expanded">
-                                        <input className="input" type='text' name='title' placeholder="Title" ref={register}/>
-                                        <span class="icon is-small is-left">
-                                            <i class="fa fa-user"></i>
-                                        </span>
-                                    </p>
+
+            {status !== "success" ? 
+
+            (<h1>{status}</h1>)
+            :
+            (
+                <>
+                <div className="container">
+                    <p className="title">Editing Game: {gameToEdit.title}</p>
+                </div>
+                <br/>  
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="columns is-multiline">
+                        <div className="column is-9">
+                            <div className="field is-horizontal">
+                                <div className="field-label is-normal">
+                                    <label className="label">Description</label>
                                 </div>
-                                <div class="field">
-									<p class="control is-expanded">
-                                        <input className="input" type='text' name='fieldNumber' placeholder="Field Number" ref={register}/>
-									</p>
-								</div>
-                            </div>
-                        </div>
-                    
-                        <div class="field is-horizontal">
-							<div class="field-label is-normal">
-								<label class="label">Location</label>
-							</div>
-
-                            <div className="field-body">
-                                <div class="field">
-									<p class="control is-expanded">
-                                        <input className="input" type='text' name='location' placeholder="Toyota Soccer Complex" ref={register}/>
-									</p>
-								</div>
-                            </div>
-                        </div>
-
-                        <div class="field is-horizontal">
-							<div class="field-label is-normal">
-								<label class="label">Address</label>
-							</div>
-
-                            <div className="field-body">
-                                <div class="field">
-									<p class="control is-expanded">
-                                        <input className="input" type='text' name='address' placeholder="9200 World Cup Way, Ste 202" ref={register}/>
-									</p>
-								</div>
-                            </div>
-                        </div>
-                    
-                        <div class="field is-horizontal">
-							<div class="field-label is-normal">
-								<label class="label">Date</label>
-							</div>
-
-                            <div className="field-body">
-                                <div className="field">
-                                    <div className="control">
-                                        <DatePicker 
-                                        className="input"
-                                        dateFormat={"MMMM d, yy h:mm aa"} 
-                                        showTimeSelect 
-                                        timeIntervals={15} 
-                                        selected={startDate} 
-                                        onChange={date => setStartDate(date)} 
-                                        popperPlacement="bottom"
-                                        />
+                                <div className="field-body">
+                                    <div className="field">
+                                        <p className="control is-expanded">
+                                            <input className="input" type='text' name='title' placeholder="Title" ref={register}/>
+                                            <span className="icon is-small is-left">
+                                                <i className="fa fa-user"></i>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div className="field">
+                                        <p className="control is-expanded">
+                                            <input className="input" type='text' name='fieldNumber' placeholder="Field Number" ref={register}/>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         
-                        </div>
+                            <div className="field is-horizontal">
+                                <div className="field-label is-normal">
+                                    <label className="label">Location</label>
+                                </div>
 
-                        <div class="field is-horizontal">
-							<div class="field-label is-normal">
-								<label class="label">Age Group</label>
-							</div>
-                            <div className="field-body">
-                                <div className="field">
-                                    <div className="control">
-                                        <div className="select">
-                                            <select name="ageGroup" ref={register}>
-                                                {ageGroups.map(ageGroup => (
-                                                    <option>{ageGroup}</option>
-                                                ))}
-                                            </select>
+                                <div className="field-body">
+                                    <div className="field">
+                                        <p className="control is-expanded">
+                                            <input className="input" type='text' name='location' placeholder="Toyota Soccer Complex" ref={register}/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="field is-horizontal">
+                                <div className="field-label is-normal">
+                                    <label className="label">Address</label>
+                                </div>
+
+                                <div className="field-body">
+                                    <div className="field">
+                                        <p className="control is-expanded">
+                                            <input className="input" type='text' name='address' placeholder="9200 World Cup Way, Ste 202" ref={register}/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div className="field is-horizontal">
+                                <div className="field-label is-normal">
+                                    <label className="label">Date</label>
+                                </div>
+
+                                <div className="field-body">
+                                    <div className="field">
+                                        <div className="control">
+                                            <DatePicker 
+                                            className="input"
+                                            dateFormat={"MMMM d, yy h:mm aa"} 
+                                            showTimeSelect 
+                                            timeIntervals={15} 
+                                            selected={startDate} 
+                                            onChange={date => setStartDate(date)} 
+                                            popperPlacement="bottom"
+                                            />
                                         </div>
                                     </div>
                                 </div>
+                            
                             </div>
-                        
-                        </div>
 
-                        <div class="field is-horizontal">
-							<div class="field-label is-normal">
-								<label class="label">Film Type</label>
-							</div>
-                            <div className="field-body">
-                                <div className="field">
-                                    <div className="control">
-                                        <div className="select">
-                                            <select name="filmType" ref={register}>
-                                                <option>Manual Film</option>
-                                                <option>Veo</option>
-                                                <option>Live Stream</option>
-                                            </select>
-                                        </div>  
+                            <div className="field is-horizontal">
+                                <div className="field-label is-normal">
+                                    <label className="label">Age Group</label>
+                                </div>
+                                <div className="field-body">
+                                    <div className="field">
+                                        <div className="control">
+                                            <div className="select">
+                                                <select name="ageGroup" ref={register}>
+                                                    {ageGroups.map(ageGroup => (
+                                                        <option key={ageGroup}>{ageGroup}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            
                             </div>
-                        
-                        </div>
-                        <br/>
-                        <div className="field is-grouped">
-                            <div className="control">
-                                <button className="button is-link" type="submit">Submit</button>
+
+                            <div className="field is-horizontal">
+                                <div className="field-label is-normal">
+                                    <label className="label">Film Type</label>
+                                </div>
+                                <div className="field-body">
+                                    <div className="field">
+                                        <div className="control">
+                                            <div className="select">
+                                                <select name="filmType" ref={register}>
+                                                    <option>Manual Film</option>
+                                                    <option>Veo</option>
+                                                    <option>Live Stream</option>
+                                                </select>
+                                            </div>  
+                                        </div>
+                                    </div>
+                                </div>
+                            
                             </div>
-                            <div className="control">
-                                <button 
-                                className="button is-link is-light"
-                                onClick={() => reset()}>
-                                Cancel
-                                </button>
+                            <br/>
+                            <div className="field is-grouped">
+                                <div className="control">
+                                    <button className="button is-link" type="submit">Submit</button>
+                                </div>
+                                <div className="control">
+                                    <button 
+                                    className="button is-link is-light"
+                                    onClick={cancel}>
+                                    Cancel
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form> 
-            
+                </form> 
+                </>
+            )}
         </div>
     )
 }

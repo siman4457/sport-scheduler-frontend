@@ -4,10 +4,6 @@ import { useForm } from 'react-hook-form'
 import { useQuery , useMutation } from 'react-query';
 import axios from 'axios';
 
-const fetchEmployee = async (id) => {
-    const res = await fetch(`/employees/getEmployee/${id}`);
-    return res.json()
-}
 
 let defaultValues = {
     first_name: "",
@@ -23,6 +19,11 @@ let defaultValues = {
     canManualRecord: false,
     phoneNumber: 1111111111,
   };
+  
+const fetchEmployee = async (id) => {
+    const res = await fetch(`/employees/getEmployee/${id}`);
+    return res.json()
+}
 
 export default function EditEmployee() {
     let { id } = useParams();
