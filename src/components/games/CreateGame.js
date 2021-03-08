@@ -36,13 +36,16 @@ export default function CreateGame() {
         )
     }, [])
 
+    const cancel = (e) => {
+        e.preventDefault();
+        reset();
+    }
+
+    
     return (
         <div className="main" id="main">
-            <div className="container">
-            <p className="title">Add Game</p>
-            </div>
+            <h1 className="title">Add Game</h1>
             <br/>
-                
             
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="columns is-multiline">
@@ -166,7 +169,7 @@ export default function CreateGame() {
                             <div className="control">
                                 <button 
                                 className="button is-link is-light"
-                                onClick={() => reset()}>
+                                onClick={cancel}>
                                 Cancel
                                 </button>
                             </div>

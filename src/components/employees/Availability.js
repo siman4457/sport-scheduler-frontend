@@ -4,12 +4,13 @@ import axios from 'axios';
 import { Dropdown } from 'react-bulma-components';
 import moment from 'moment';
 import { useQuery } from 'react-query';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
  
 const fetchEmployees = async () => {
-    const res = await fetch("http://localhost:5000/employees/getEmployees");
+    const res = await fetch("/employees/getEmployees");
     return res.json()
 }
-
 
 const Availability = () => {
     const [employees, setEmployees] = useState([]);
@@ -36,7 +37,7 @@ const Availability = () => {
             employee: selectedEmployee
         }
         
-        axios.post("http://localhost:5000/employees/createAvailability", req)
+        axios.post("/employees/createAvailability", req)
         .then(res => {            
             if(selectedEmployee){
                 const updated_availability = [...selectedEmployee.availability, req.new_availability];
@@ -53,7 +54,7 @@ const Availability = () => {
             employee: employee,
             availability: availability
         }
-        axios.post("http://localhost:5000/employees/removeAvailability", req)
+        axios.post("/employees/removeAvailability", req)
         .then(res => {
             console.log(res.data.message)
             
@@ -76,24 +77,75 @@ const Availability = () => {
         <>
         <div className="main" id="main">               
             <h1 className="title">Availability</h1>
-            <div className="select">
-                <Dropdown value={selectedEmployee} onChange={handleSelect}>
-                    {employees && employees.map(employee => (
-                        <Dropdown.Item className="has-text-black" key={employee._id} value={employee}>
-                            {employee.first_name} {employee.last_name}
-                        </Dropdown.Item>
-                    ))}
-                </Dropdown>
+            <br/>
+            <div className="columns is-multiline">
+                <div className="column is-9">
+                <div className="field is-horizontal">
+                    <div className="field-label is-normal">
+                        <label className="label">Showing availability for:</label>
+                    </div>
+                    <div className="field-body">
+                        <div className="field">
+                            <div className="control select">
+                            <Dropdown value={selectedEmployee} onChange={handleSelect}>
+                                {employees && employees.map(employee => (
+                                    <Dropdown.Item className="has-text-black" key={employee._id} value={employee}>
+                                        {employee.first_name} {employee.last_name}
+                                    </Dropdown.Item>
+                                ))}
+                            </Dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
             </div>
+            
+            <form>
+                <div className="columns is-multiline">
+                    <div className="column is-9">
+                    <div className="field is-horizontal">
+                        <div className="field-label is-normal">
+                            <label className="label">Add Availability</label>
+                        </div>
+                        <div className="field-body">
+                            <div className="field">
+                                <div className="control">
+                                    <DatePicker className="input" dateFormat={"MMMM d, yy"} selected={date} onChange={date => setDate(date)} />
+                                    &nbsp;
+                                    <button className="button is-success" type="submit" onClick={addAvailability}><FontAwesomeIcon icon={faPlus}/></button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </form>
             <br/>
             <br/>
-            <ul>
-                {selectedEmployee.availability && selectedEmployee.availability.map(day => (
-                    <li key={day}><span>{new Date(day).toDateString()}</span> <button className="button" onClick={() => removeAvailability(selectedEmployee, day)}>Remove</button></li>
-                ))}    
-            </ul>
-            <DatePicker dateFormat={"MMMM d, yy"} selected={date} onChange={date => setDate(date)} />
-            <button className="button" onClick={addAvailability}>Add Availability</button>
+            <div className="columns is-multiline">
+                <div className="column is-one-third">
+                <table className="table is-striped is-narrow is-fullwidth ">
+                    <thead>
+                        <tr>
+                        <th>Date</th>
+                        <th>Remove</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {selectedEmployee.availability && selectedEmployee.availability.map(day => (
+                        <tr key={day}>
+                            <td><span>{new Date(day).toDateString()}</span> </td>
+                            <td><button className="button is-danger" onClick={() => removeAvailability(selectedEmployee, day)}><FontAwesomeIcon icon={faTrashAlt}/></button></td>
+                        </tr>
+                    ))}
+
+                        
+                    </tbody>
+                </table>
+                </div>
+            </div>
         </div>
         
         </>

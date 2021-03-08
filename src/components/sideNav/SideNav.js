@@ -30,7 +30,7 @@ const SideNav = () => {
                     <ul className="menu-list">
                     <li>
                         <NavLink className="<%= isActiveClass('home') %>" to={"/schedule"}>
-                            <span className="icon is-small"><i className="fa fa-tachometer"></i></span> <span className="menu-text">View Schedule</span>
+                            <span className="icon is-small"><i className="fa fa-tachometer"></i></span> <span className="menu-text">Schedule</span>
                         </NavLink>               
                     </li>
                     <li>
@@ -40,13 +40,13 @@ const SideNav = () => {
                     </li>
                     
                     <li>
-                        <NavLink className="<%= isActiveClass('home') %>" to={"/createGame"}>
-                            <span className="icon is-small"><i className="fa fa-tachometer"></i></span> <span className="menu-text">View Unscheduled</span>
+                        <NavLink className="<%= isActiveClass('home') %>" to={"/export"}>
+                            <span className="icon is-small"><i className="fa fa-tachometer"></i></span> <span className="menu-text">Export</span>
                         </NavLink>
                     </li>
                     <li>
                         <NavLink className="<%= isActiveClass('home') %>" to={"/createGame"}>
-                            <span className="icon is-small"><i className="fa fa-tachometer"></i></span> <span className="menu-text">View Scheduled</span>
+                            <span className="icon is-small"><i className="fa fa-tachometer"></i></span> <span className="menu-text">Scheduled</span>
                         </NavLink>
                     </li>
                 </ul>
@@ -55,7 +55,7 @@ const SideNav = () => {
                 <ul className="menu-list">
                 <li>
                     <NavLink className="<%= isActiveClass('home') %>" to={"/employees"}>
-                        <span className="icon is-small"><i className="fa fa-tachometer"></i></span> <span className="menu-text">View Employees</span>
+                        <span className="icon is-small"><i className="fa fa-tachometer"></i></span> <span className="menu-text">Employees</span>
                     </NavLink>
                 </li>
                 <li>
