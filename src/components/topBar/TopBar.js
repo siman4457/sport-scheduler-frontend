@@ -14,7 +14,7 @@ export default function TopBar() {
                         alt="Brand logo"
                     />
                     </a> */}
-                    <span>Sports Scheduler</span>
+                    <h1>Team Vision</h1>
 
                     <button className="button navbar-burger" data-target="navMenu">
                     <span></span>

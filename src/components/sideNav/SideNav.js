@@ -44,11 +44,7 @@ const SideNav = () => {
                             <span className="icon is-small"><i className="fa fa-tachometer"></i></span> <span className="menu-text">Export</span>
                         </NavLink>
                     </li>
-                    <li>
-                        <NavLink className="<%= isActiveClass('home') %>" to={"/createGame"}>
-                            <span className="icon is-small"><i className="fa fa-tachometer"></i></span> <span className="menu-text">Scheduled</span>
-                        </NavLink>
-                    </li>
+                    
                 </ul>
 
                 <p className="menu-label">Employees</p>
