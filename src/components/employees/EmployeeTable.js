@@ -19,6 +19,7 @@ const EmployeeTable = ({data, status, deleteEmployee}) => {
                 <th>Football</th>
                 <th>Live Stream</th>
                 <th>Address</th>
+                <th>View Games</th>
                 <th>Edit</th>
                 <th>Delete</th>
                 </tr>
@@ -40,6 +41,11 @@ const EmployeeTable = ({data, status, deleteEmployee}) => {
                     <td>{employee.canFilmFootball ? ("Yes") : ("No")}</td>
                     <td>{employee.canLiveStream ? ("Yes") : ("No")}</td>
                     <td>{employee.address}</td>
+                    <td>
+                        <Link className="button" to={`/employees/viewgames/${employee._id}`}>                            
+                            <span>View</span>
+                        </Link>
+                    </td>
                     <td>
                         <Link className="button is-primary" to={`/employees/edit/${employee._id}`}>                            
                             <FontAwesomeIcon icon={faEdit}/>&nbsp;<span>Edit</span>

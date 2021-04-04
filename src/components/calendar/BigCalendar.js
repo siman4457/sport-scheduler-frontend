@@ -141,14 +141,16 @@ export default function BigCalendar() {
         const req = {
           id: game.resource
         }  
-        let index = events.findIndex(e => e.resource === game.resource);
         
         await axios.delete("/games/deleteGame", {data: req})
         .then(res =>{
-          console.log(res.data.message);
-          let newEvents = [...events];
-          newEvents.slice(index)
-          setEvents(newEvents);
+          //If successful then remove from UI
+          if(res.status === 200){
+            let index = events.findIndex(e => e.resource === game.resource);
+            let newEvents = [...events];
+            newEvents.splice(index,1)
+            setEvents(newEvents);
+          }
           
           //Close modal
           setShow(false);

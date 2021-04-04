@@ -36,7 +36,9 @@ function Login(){
 
     return (
         <section className="hero is-primary is-fullheight">
+            <h1 className="title center">Team Vision</h1>
             <div className="hero-body">
+                
                 <div className="container">
                     <div className="columns is-centered">
                         <div className="column is-5-tablet is-4-desktop is-3-widescreen">
@@ -76,7 +78,7 @@ function Login(){
                                 <div className="field">
                                     <label htmlFor="" className="checkbox">
                                         <input type="checkbox"/>
-                                            Remember me
+                                            &nbsp; Remember me
                                     </label>
                                 </div>
                                 <div className="field">

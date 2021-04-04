@@ -77,9 +77,8 @@ export default function EditGame() {
             :
             (
                 <>
-                <div className="container">
-                    <p className="title">Editing Game: {gameToEdit.title}</p>
-                </div>
+                <h1 className="title">Editing Game: {gameToEdit.title}</h1>
+                
                 <br/>  
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="columns is-multiline">
@@ -90,16 +89,21 @@ export default function EditGame() {
                                 </div>
                                 <div className="field-body">
                                     <div className="field">
-                                        <p className="control is-expanded">
-                                            <input className="input" type='text' name='title' placeholder="Title" ref={register}/>
-                                            <span className="icon is-small is-left">
-                                                <i className="fa fa-user"></i>
-                                            </span>
-                                        </p>
+                                        <div className="control is-expanded">
+                                            <input 
+                                            className="input" 
+                                            type='text' 
+                                            name='title' 
+                                            ref={register}/>
+                                        </div>
                                     </div>
                                     <div className="field">
                                         <p className="control is-expanded">
-                                            <input className="input" type='text' name='fieldNumber' placeholder="Field Number" ref={register}/>
+                                            <input 
+                                            className="input" 
+                                            type='text' 
+                                            name='fieldNumber' 
+                                            ref={register}/>
                                         </p>
                                     </div>
                                 </div>
